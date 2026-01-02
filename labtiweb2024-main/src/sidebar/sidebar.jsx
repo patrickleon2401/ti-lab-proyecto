@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaRobot } from 'react-icons/fa';
 
 const Sidebar = () => {
   const [hovered, setHovered] = useState(null);  
@@ -27,6 +28,10 @@ const Sidebar = () => {
       borderBottom: '1px solid #ccc',
       padding: '20px',
       transition: 'background-color 0.3s ease',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px',
     },
 
     navItemHover: {
@@ -107,6 +112,20 @@ const Sidebar = () => {
         onClick={() => handleItemClick(4)}  // Removed preventDefault()
       >
         Manuales
+      </a>
+      <a
+        href="#tilab-assistant"
+        style={{
+          ...styles.navItem,
+          ...(hovered === 5 ? styles.navItemHover : {}),
+          ...(selected === 5 ? styles.navItemSelected : {}),
+        }}
+        onMouseEnter={() => handleMouseEnter(5)}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => handleItemClick(5)}  // Removed preventDefault()
+      >
+        <FaRobot />
+        TILab Assistant
       </a>
     </div>
   );

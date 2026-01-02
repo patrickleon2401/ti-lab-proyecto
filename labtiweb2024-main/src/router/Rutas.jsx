@@ -8,6 +8,7 @@ import ComponenteDetalle from "../manual/ComponenteDetalle";
 import DetalleLaboratorio from "../home/DetalleLaboratorio";
 import DetalleCurso from "../cursos/DetalleCurso";
 import AdminInterface from "../AdminHome/AdminInterface"
+import TILabAssistant from "../tilabAssistant/TILabAssistant"
 
 const Rutas = () => {
     return createHashRouter([
@@ -46,6 +47,10 @@ const Rutas = () => {
         {
             path: "/AdminInterface",
             element: <AdminInterface />
+        },
+        {
+            path: "/tilab-assistant",
+            element: <TILabAssistant />
         }
       
 

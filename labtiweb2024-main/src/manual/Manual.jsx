@@ -55,7 +55,8 @@ const Manual = () => {
 
   // Si no hay componente seleccionado, mostramos todos los componentes
   return (
-    <LayoutWithSidebar className="content manual-container">
+    <LayoutWithSidebar>
+      <div className="content manual-container">
       <h2>Componentes de LABS TI</h2>
       <p>Consulta los componentes y sus manuales correspondientes.</p>
       <div
@@ -74,6 +75,9 @@ const Manual = () => {
           />
         ))}
       </div>
+
+      </div>
+      
     </LayoutWithSidebar>
   );
 };
