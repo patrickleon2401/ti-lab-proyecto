@@ -1,10 +1,11 @@
 // Mock data for components - simulates exact backend response
+import iotImg from "../Images/iot.jpg";
 export const componentesMock = [
   {
     id: 1,
     nombre: "Router Cisco 2911",
     descripcion: "Router empresarial de alto rendimiento para redes de área amplia. Soporta múltiples protocolos de enrutamiento y características de seguridad avanzadas.",
-    foto1: "https://via.placeholder.com/600x400/FF9500/FFFFFF?text=Router+Cisco",
+    foto1: "https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.redeszone.net%2Ftutoriales%2Fredes-cable%2Fdiferencias-interfaces-sub-interfaces-router%2F&ved=0CBUQjRxqFwoTCLDErv2c7ZEDFQAAAAAdAAAAABAH&opi=89978449",
     foto2: "https://via.placeholder.com/600x400/FF9500/FFFFFF?text=Router+Front",
     foto3: "https://via.placeholder.com/600x400/FF9500/FFFFFF?text=Router+Back",
     manuals: [
@@ -22,11 +23,11 @@ export const componentesMock = [
   },
   {
     id: 2,
-    nombre: "Switch Catalyst 2960",
-    descripcion: "Switch gestionable de capa 2 con 24 puertos Gigabit Ethernet. Ideal para redes empresariales medianas.",
-    foto1: "https://via.placeholder.com/600x400/FF9500/FFFFFF?text=Switch+Catalyst",
-    foto2: "https://via.placeholder.com/600x400/FF9500/FFFFFF?text=Switch+Front",
-    foto3: "https://via.placeholder.com/600x400/FF9500/FFFFFF?text=Switch+Ports",
+    nombre: "Switch Catalyst 299",
+    descripcion: "Switch gestionable de capa 1 con 24 puertos Gigabit Ethernet. Ideal para redes empresariales medianas.",
+    foto1: iotImg,
+    foto2: iotImg,
+    foto3: iotImg,
     manuals: [
       {
         id: 3,
