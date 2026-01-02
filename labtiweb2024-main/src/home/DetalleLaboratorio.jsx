@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";  // Para acceder a los parámetros de la URL
-import { pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 import Slider from 'react-slick';  // Importa Slider desde react-slick
@@ -13,7 +13,7 @@ const DetalleLaboratorio = () => {
   useEffect(() => {
     const fetchLaboratorio = async () => {
       try {
-        const response = await fetch(`http://${pcdeApoyo}/back/obtener_laboratorio1/${id}`);
+        const response = await apiService.getLaboratorioById(id); // Usa el servicio API
         if (!response.ok) {
           throw new Error("No se pudo cargar el laboratorio");
         }

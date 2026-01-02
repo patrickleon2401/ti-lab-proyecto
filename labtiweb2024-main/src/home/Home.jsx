@@ -3,7 +3,7 @@ import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 import "./Home.css";  // Importamos el archivo CSS
 import Aula from "./Aula";
-import { local, pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
 
 const Home = () => {
   const [laboratorios, setLaboratorios] = useState([]);  // Estado para almacenar los laboratorios
@@ -12,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchLaboratorios = async () => {
       try {
-        const response = await fetch(`http://${pcdeApoyo}/back/obtener_laboratorios`);  // Asegúrate de que la URL sea la correcta
+        const response = await apiService.getLaboratorios();  // Usa el servicio API
         if (!response.ok) {
           throw new Error("No se pudieron cargar los laboratorios");
         }

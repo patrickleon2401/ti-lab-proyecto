@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';  // Importa Slider desde react-slick
-import { pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
+import { USE_MOCK } from '../constants/env.js';
+import { pcdeApoyo } from '../config.js';
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 
@@ -12,7 +14,7 @@ const ComponenteDetalle = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://${pcdeApoyo}/back/obtener_componente1/${id}`)
+    apiService.getComponenteById(id) // Usa el servicio API
       .then(response => response.json())
       .then(data => {
         setComponente(data);
@@ -85,7 +87,7 @@ const ComponenteDetalle = () => {
               componente.manuals.map((manual) => (
                 <div key={manual.id} className="manual-item">
                   <span>{manual.nombre}</span>
-                  <a href={`http://${pcdeApoyo}/back/descargar_pdf/${manual.url}`} className="download-button" download>
+                  <a href={USE_MOCK ? `/${manual.url}` : `http://${pcdeApoyo}/back/descargar_pdf/${manual.url}`} className="download-button" download>
                     ⬇ Descargar
                   </a>
                 </div>

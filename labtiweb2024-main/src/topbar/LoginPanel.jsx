@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { pcdeApoyo } from '../config'; // Asegúrate de tener esta IP o dominio definido
+import { apiService } from '../services/api.service'; // Usa el servicio API
 import { useNavigate } from "react-router-dom";
 const LoginPanel = ({ isOpen, onClose }) => {
   const panelRef = useRef(null);
@@ -41,13 +41,7 @@ const LoginPanel = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`http://${pcdeApoyo}/back/login/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await apiService.login(email, password); // Usa el servicio API
 
     const data = await response.json();
 

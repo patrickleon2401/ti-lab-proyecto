@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom"; // Para obtener el id del curso de
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 import "../material/Material.css"; // Asegúrate de que los estilos sean consistentes
-import { local, pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
+import { USE_MOCK } from '../constants/env.js';
+import { pcdeApoyo } from '../config.js';
 
 const DetalleCurso = () => {
   const { id } = useParams(); // Obtener el id del curso desde la URL
@@ -14,13 +16,7 @@ const DetalleCurso = () => {
   useEffect(() => {
     console.log(id);
     // Hacer una solicitud para obtener los materiales del curso con el id específico
-    fetch(`http://${pcdeApoyo}/back/obtener_materiales_por_curso/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',  // Asegúrate de que el tipo de contenido sea 'application/json'
-      },
-      body: JSON.stringify({ curso_id: id })  // Envía el 'curso_id' como JSON
-    })
+    apiService.getMaterialesByCurso(id) // Usa el servicio API
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -64,7 +60,7 @@ const DetalleCurso = () => {
                 <div key={material.id} className="material-item">
                   <span>{material.nombre}</span>
                   <a
-                    href={`http://${pcdeApoyo}/back/descargar_pdf/${material.url}`}
+                    href={USE_MOCK ? `/${material.url}` : `http://${pcdeApoyo}/back/descargar_pdf/${material.url}`}
                     className="download-button"
                     download
                   >

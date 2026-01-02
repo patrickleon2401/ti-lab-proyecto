@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 import CursoCard from "./CursoCard"; // Asegúrate de importar el nuevo componente CursoCard
-import { local, pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
 const Cursos = () => {
   const [cursos, setCursos] = useState([]); // Estado para almacenar los cursos
   const [loading, setLoading] = useState(true); // Estado para el cargando (loading)
 
   // Usamos useEffect para realizar la solicitud HTTP al backend cuando el componente se monta
   useEffect(() => {
-    fetch(`http://${pcdeApoyo}/back/obtener_cursos`) // Asegúrate de que esta URL coincida con tu endpoint en Django'http://127.0.0.1:8000/back/obtener_cursos
+    apiService.getCursos() // Usa el servicio API
       .then((response) => response.json())
       .then((data) => {
         setCursos(data); // Establecemos los cursos obtenidos en el estado

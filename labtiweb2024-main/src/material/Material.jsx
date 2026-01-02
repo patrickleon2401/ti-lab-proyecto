@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 import "./Material.css";
-import { local, pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
+import { USE_MOCK } from '../constants/env.js';
+import { pcdeApoyo } from '../config.js';
 const Material = () => {
   const [materiales, setMateriales] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Usamos useEffect para realizar la solicitud HTTP al backend
   useEffect(() => {
-    fetch(`http://${pcdeApoyo}/back/obtener_materiales`) // Cambia la URL si es necesario
+    apiService.getMateriales() // Usa el servicio API
       .then((response) => response.json())
       .then((data) => {
         setMateriales(data);
@@ -66,7 +68,7 @@ const Material = () => {
                   <div key={material.id} className="material-item">
                     <span>{material.nombre}</span>
                     <a
-                      href={`http://${pcdeApoyo}/back/descargar_pdf/${material.url}`}
+                      href={USE_MOCK ? `/${material.url}` : `http://${pcdeApoyo}/back/descargar_pdf/${material.url}`}
                       className="download-button"
                       download
                     >

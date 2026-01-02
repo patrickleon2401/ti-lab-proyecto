@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
-import { local, pcdeApoyo } from '../config';
+import { apiService } from '../services/api.service';
 import './Manual.css'; // Asegúrate de crear este archivo CSS
 import { useNavigate } from "react-router-dom"; // Para redirigir cuando el usuario haga clic
 
@@ -51,7 +51,7 @@ const Manual = () => {
 
   // Traer todos los componentes cuando el componente se monta
   useEffect(() => {
-    fetch(`http://${pcdeApoyo}/back/obtener_componentes`) // Cambiar con la URL adecuada
+    apiService.getComponentes() // Usa el servicio API
       .then((response) => response.json())
       .then((data) => {
         setComponentes(data);
