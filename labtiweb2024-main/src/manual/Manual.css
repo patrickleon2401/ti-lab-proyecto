@@ -1,0 +1,42 @@
+.manual-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    align-items: left;
+  }
+  
+  .manual-list {
+    margin-top: 20px;
+  }
+  
+  .manual-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 500px;
+  }
+  
+  .download-button {
+    padding: 5px 10px;
+    background-color: #FF9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .download-button:hover {
+    background-color: #E68A00;
+  }
+  
