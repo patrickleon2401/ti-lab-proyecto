@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaBook, FaTools } from 'react-icons/fa';
 
 /**
@@ -27,27 +26,16 @@ const ModernCard = ({
   badge = null
 }) => {
   return (
-    <motion.div
-      className={`modern-card ${hover ? 'card-hover' : ''} overflow-hidden group relative ${className}`}
+    <div
+      className={`modern-card ${hover ? 'hover-lift' : ''} relative ${className}`}
       onClick={onClick}
       style={style}
-      whileHover={hover ? { 
-        y: -4,
-        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)"
-      } : {}}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.3 }}
     >
       {/* Badge */}
       {badge && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="absolute top-4 right-4 z-10 px-3 py-1 bg-primary text-white text-xs font-semibold rounded-full"
-        >
+        <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-primary text-white text-xs font-semibold rounded-full">
           {badge}
-        </motion.div>
+        </div>
       )}
 
       {/* Image Section */}
@@ -56,33 +44,24 @@ const ModernCard = ({
           <img
             src={image}
             alt={title || "Card image"}
-            className="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+            className="w-full h-48 md:h-56 object-cover"
           />
           
           {/* Image Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
           
           {/* Icon overlay */}
           {icon && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="absolute bottom-4 left-4 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-modern"
-            >
+            <div className="absolute bottom-4 left-4 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-md">
               {icon}
-            </motion.div>
+            </div>
           )}
 
           {/* Hover indicator */}
           {hover && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              className="absolute top-4 right-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center"
-            >
+            <div className="absolute top-4 right-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
               <FaExternalLinkAlt className="text-primary" size={14} />
-            </motion.div>
+            </div>
           )}
         </div>
       )}
@@ -91,38 +70,23 @@ const ModernCard = ({
       <div className="p-6">
         {/* Title */}
         {title && (
-          <motion.h3
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-title text-text-primary font-semibold mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300"
-          >
+          <h3 className="text-title text-text-primary font-semibold mb-2 hover:text-primary transition-colors duration-300">
             {title}
-          </motion.h3>
+          </h3>
         )}
 
         {/* Subtitle */}
         {subtitle && (
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="text-caption text-text-secondary mb-4 line-clamp-2"
-          >
+          <p className="text-caption text-text-secondary mb-4">
             {subtitle}
-          </motion.p>
+          </p>
         )}
 
         {/* Children */}
         {children && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-body text-text-secondary/80 space-y-3"
-          >
+          <div className="text-body text-text-secondary/80 space-y-3">
             {children}
-          </motion.div>
+          </div>
         )}
       </div>
 
@@ -130,7 +94,7 @@ const ModernCard = ({
       {onClick && (
         <div className="absolute inset-0 cursor-pointer z-20" />
       )}
-    </motion.div>
+    </div>
   );
 };
 
@@ -195,52 +159,33 @@ export const SimpleCard = ({
   icon = null, 
   hover = true,
   onClick = null,
-  className = ""
+  className = "",
+  style = {}
 }) => {
   return (
-    <motion.div
-      className={`modern-card p-6 ${hover ? 'card-hover cursor-pointer' : ''} ${className}`}
+    <div
+      className={`modern-card p-6 ${hover ? 'hover-lift' : ''} ${className}`}
       onClick={onClick}
-      whileHover={hover ? { 
-        y: -2,
-        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)"
-      } : {}}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.3 }}
+      style={style}
     >
       {icon && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4"
-        >
+        <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
           {icon}
-        </motion.div>
+        </div>
       )}
       
       {title && (
-        <motion.h3
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="text-title text-text-primary font-semibold mb-3"
-        >
+        <h3 className="text-title text-text-primary font-semibold mb-3">
           {title}
-        </motion.h3>
+        </h3>
       )}
 
       {children && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-body text-text-secondary/80"
-        >
+        <div className="text-body text-text-secondary/80">
           {children}
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 
