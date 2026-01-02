@@ -15,8 +15,10 @@ This is a React-based web application for "LABS TI" - a laboratory management pl
 
 ### Backend Integration
 - **RESTful API** communication with Django backend
+- **Mock Data Support** - Complete mock data layer for development
 - **Base URL Configuration** - Centralized in `config.js`
 - **Authentication** - JWT-based login system with localStorage persistence
+- **Development Isolation** - Works 100% without backend via `USE_MOCK` flag
 
 ## Project Structure
 
@@ -26,6 +28,29 @@ src/
 ├── config.js              # API configuration
 ├── router/
 │   └── Rutas.jsx          # Route definitions
+├── components/            # Reusable UI components
+│   ├── LayoutWithSidebar.jsx # Main layout wrapper
+│   ├── Loading.jsx         # Loading state component
+│   ├── DownloadButton.jsx  # Download button with mock/real logic
+│   ├── ImageCarousel.jsx   # Image carousel wrapper
+│   └── Card.jsx           # Generic card component
+├── constants/             # Centralized constants
+│   ├── env.js            # Environment flags (USE_MOCK)
+│   ├── endpoints.js       # API endpoints definitions
+│   ├── styles.js         # Color and spacing constants
+│   └── ui.js            # UI configuration objects
+├── services/              # Data layer abstraction
+│   └── api.service.js    # API service with mock/real switch
+├── utils/                 # Helper functions
+│   ├── delay.js          # Delay simulation helper
+│   ├── text.js           # Text rendering helpers
+│   └── url.js            # URL building helpers
+├── mock/                 # Mock data for development
+│   ├── auth.mock.js      # Authentication mock
+│   ├── componentes.mock.js # Components mock data
+│   ├── cursos.mock.js    # Courses mock data
+│   ├── laboratorios.mock.js # Laboratories mock data
+│   └── materiales.mock.js # Materials mock data
 ├── topbar/
 │   ├── TopBar.jsx         # Main header component
 │   └── LoginPanel.jsx     # Authentication interface
@@ -189,72 +214,166 @@ const [loading, setLoading] = useState(true);
 
 ## Configuration
 
+### Environment Management
+```javascript
+// src/constants/env.js
+export const USE_MOCK = true;  // Switch between mock and real API
+```
+
 ### API Configuration (`config.js`)
 ```javascript
-const config = {
-  apiUrl: 'http://192.168.1.15:8000',  // Local IP configuration
-  // Update this for different environments
+// Local IP configuration for real backend
+const local = "192.168.51.205";
+const pcdeApoyo = "127.0.0.1:8000";
+export { local, pcdeApoyo };
+```
+
+### API Endpoints (`src/constants/endpoints.js`)
+```javascript
+// Centralized endpoint definitions
+export const ENDPOINTS = {
+  LABORATORIOS: '/obtener_laboratorios',
+  CURSOS: '/obtener_cursos',
+  COMPONENTES: '/obtener_componentes',
+  MATERIALES: '/obtener_materiales',
+  LOGIN: '/login/',
+  // ... more endpoints
 };
-export default config;
 ```
 
 ## Styling Guidelines
 
-### Color Scheme
-- **Primary Orange**: #FF9500 (brand color)
-- **Secondary Gray**: #D9D9D9 (sidebar background)
-- **White**: #FFFFFF (card backgrounds)
-- **Black**: #000000 (text)
+### Color Scheme (`src/constants/styles.js`)
+```javascript
+export const COLORS = {
+  PRIMARY_ORANGE: '#FF9500',  // Brand color
+  SIDEBAR_GRAY: '#D9D9D9',    // Sidebar background
+  CARD_GRAY: '#f4f4f4',       // Card backgrounds
+  TEXT_DARK: '#888',           // Text color
+  WHITE: '#FFFFFF',
+  BLACK: '#000000'
+};
+```
+
+### Spacing Constants (`src/constants/styles.js`)
+```javascript
+export const SPACING = {
+  CARD_PADDING: '15px',
+  GRID_GAP: '20px',
+  CONTENT_PADDING: '20px',
+  BORDER_RADIUS: '8px',
+  SMALL_GAP: '10px'
+};
+```
 
 ### CSS Architecture
 - **Component-based CSS**: Each component has its own CSS file
+- **Centralized Constants**: Colors and spacing in `src/constants/styles.js`
 - **Inline Styles**: Heavy use for dynamic styling
 - **Responsive Design**: Media queries for mobile/tablet/desktop
 - **Consistent Theme**: Orange primary color throughout
 
-### Common Patterns
-```css
-/* Card styling */
-.card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
+### Reusable Components
 
-.card:hover {
-  transform: translateY(-2px);
-}
+### LayoutWithSidebar (`src/components/LayoutWithSidebar.jsx`)
+```jsx
+// Standard layout structure used throughout app
+<LayoutWithSidebar>
+  <h2>Page Title</h2>
+  <p>Content here</p>
+</LayoutWithSidebar>
+```
 
-/* Responsive grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
+### Loading Component (`src/components/Loading.jsx`)
+```jsx
+// Consistent loading state
+<Loading message="Cargando datos..." />
+```
+
+### Download Button (`src/components/DownloadButton.jsx`)
+```jsx
+// Handles mock vs real backend URLs
+<DownloadButton filename="document.pdf" />
+```
+
+### Card Component (`src/components/Card.jsx`)
+```jsx
+// Generic card with consistent styling
+<Card onClick={handleClick}>
+  <p>Card content</p>
+</Card>
+```
+
+### Image Carousel (`src/components/ImageCarousel.jsx`)
+```jsx
+// Standardized image carousel with slick
+<ImageCarousel>
+  <div><img src="image1.jpg" /></div>
+  <div><img src="image2.jpg" /></div>
+</ImageCarousel>
+```
+
+## Helper Functions (`src/utils/`)
+
+### Delay Helper (`src/utils/delay.js`)
+```javascript
+import { delay } from '../utils/delay.js';
+
+await delay(1000); // Simulate API delay
+```
+
+### Text Helper (`src/utils/text.js`)
+```javascript
+import { renderMultilineText } from '../utils/text.js';
+
+// Render text with line breaks as paragraphs
+{renderMultilineText(description)}
+```
+
+### URL Helper (`src/utils/url.js`)
+```javascript
+import { createDownloadUrl } from '../utils/url.js';
+
+// Creates correct URL based on mock/real mode
+const downloadUrl = createDownloadUrl(filename);
 ```
 
 ## Data Flow Patterns
 
-### API Integration Pattern
+### API Service Layer (`src/services/api.service.js`)
+```javascript
+// Centralized API service with mock/real switch
+import { apiService } from '../services/api.service.js';
+
+const response = await apiService.getLaboratorios();
+const data = await response.json();
+```
+
+### Mock Data Development
+```javascript
+// src/mock/ directory contains complete mock datasets
+// Works offline, no backend required when USE_MOCK = true
+export const laboratoriosMock = [
+  { id: 1, nombre: "Lab Name", foto1: "image.jpg" }
+];
+```
+
+### Component Pattern (Updated)
 ```javascript
 const [data, setData] = useState([]);
 const [loading, setLoading] = useState(true);
 
 useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${config.apiUrl}/back/endpoint`);
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
+  apiService.getSomeData()
+    .then((response) => response.json())
+    .then((data) => {
+      setData(data);
       setLoading(false);
-    }
-  };
-  
-  fetchData();
+    })
+    .catch((error) => {
+      console.error("Error al obtener los datos:", error);
+      setLoading(false);
+    });
 }, []);
 ```
 
@@ -312,10 +431,16 @@ const handleClick = (id) => {
 5. Import and use in parent components
 
 ### Adding API Integration
-1. Update `config.js` if new endpoint needed
-2. Use existing API pattern with `useEffect`
-3. Implement loading and error states
-4. Handle data transformation if needed
+1. Add endpoint to `src/constants/endpoints.js`
+2. Add method to `src/services/api.service.js`
+3. Add mock data to appropriate file in `src/mock/`
+4. Use existing component pattern with `apiService`
+
+### Using Mock Data for Development
+1. Set `USE_MOCK = true` in `src/constants/env.js`
+2. All API calls will use mock data automatically
+3. No backend required for development
+4. Switch to `false` for production
 
 ### Updating Navigation
 1. Modify `sidebar/sidebar.jsx` for main navigation
@@ -327,10 +452,21 @@ const handleClick = (id) => {
 
 ### Available Scripts
 ```bash
-npm start          # Development server
+npm start          # Development server (with mock/real API)
 npm test           # Run tests
 npm run build      # Production build
 npm run eject      # Eject from CRA (irreversible)
+```
+
+### Development Modes
+```bash
+# Mock Mode (no backend required)
+# Set USE_MOCK = true in src/constants/env.js
+npm start
+
+# Real Backend Mode
+# Set USE_MOCK = false in src/constants/env.js
+npm start
 ```
 
 ### Testing Guidelines
@@ -364,6 +500,22 @@ npm run eject      # Eject from CRA (irreversible)
 - Implement proper error handling
 - Validate user input on client side
 
+## Development Improvements Applied
+
+### Code Quality Enhancements
+1. **✅ Extracted Utils**: Helper functions in `src/utils/`
+2. **✅ Centralized Constants**: All constants in `src/constants/`
+3. **✅ Service Layer**: Clean API abstraction
+4. **✅ Reusable Components**: Common UI patterns extracted
+5. **✅ Mock Data**: Complete offline development support
+6. **✅ DRY Principle**: Eliminated code duplication
+
+### Architecture Improvements
+1. **✅ Component Composition**: Reusable layout and UI components
+2. **✅ Configuration Management**: Centralized configuration
+3. **✅ Data Layer Abstraction**: Clean separation of concerns
+4. **✅ Development Isolation**: Backend independence achieved
+
 ## Future Enhancements
 
 ### Potential Improvements
@@ -373,6 +525,8 @@ npm run eject      # Eject from CRA (irreversible)
 4. **Loading Skeletons**: Improve loading states
 5. **Testing**: Increase test coverage
 6. **PWA**: Add progressive web app features
+7. **Custom Hooks**: Extract more logic to custom hooks
+8. **Component Library**: Expand reusable component set
 
 ### Performance Optimizations
 1. **Code Splitting**: Implement lazy loading
@@ -383,15 +537,49 @@ npm run eject      # Eject from CRA (irreversible)
 ## Troubleshooting
 
 ### Common Issues
-1. **API Connection**: Check `config.js` URL and backend status
-2. **Routing**: Ensure hash router is used for GitHub Pages
-3. **Styling**: Check CSS imports and inline styles
-4. **Authentication**: Verify localStorage and token handling
+1. **API Connection**: Check `USE_MOCK` flag and backend status
+2. **Mock Data Not Working**: Verify `USE_MOCK = true` in `src/constants/env.js`
+3. **Real API Not Working**: Check `USE_MOCK = false` and backend URL in `config.js`
+4. **Routing**: Ensure hash router is used for GitHub Pages
+5. **Styling**: Check CSS imports and inline styles
+6. **Authentication**: Verify localStorage and token handling
+
+### Development Mode Switch
+```javascript
+// src/constants/env.js
+export const USE_MOCK = true;   // Development (no backend)
+// export const USE_MOCK = false; // Production (real backend)
+```
 
 ### Debug Tips
-- Use browser DevTools for network requests
+- Check `USE_MOCK` flag first when API calls fail
+- Use browser DevTools for network requests (real mode only)
 - Check console for JavaScript errors
-- Verify API responses in Network tab
+- Verify mock data structure in `src/mock/` files
 - Test responsive design with device emulation
+- Mock data works completely offline
 
 This guide provides comprehensive documentation for the LABS TI React project, enabling efficient development, maintenance, and enhancement of the platform.
+
+---
+
+## Migration & Refactoring Summary
+
+### Legacy Code Refactoring Applied
+The LABS TI React project underwent conservative refactoring to improve code quality while maintaining 100% functional compatibility:
+
+**Before**: scattered constants, duplicated code, backend dependency
+**After**: centralized architecture, reusable components, mock data support
+
+### Key Benefits Achieved
+1. **Development Independence**: 100% functional without backend
+2. **Code Maintainability**: Centralized constants and utils
+3. **Consistency**: Standardized components and patterns
+4. **Team Collaboration**: Clear structure and documentation
+5. **Rapid Development**: Mock data enables fast prototyping
+
+### Refactoring Philosophy Applied
+- **Conservative Approach**: Zero functional changes
+- **Backward Compatibility**: All existing behavior preserved
+- **Incremental Changes**: Small, verifiable commits
+- **Legacy Respect**: Maintained original architecture
