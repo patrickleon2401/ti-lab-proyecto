@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ModernLayout from "../components/ModernLayout";
-import { LabCard } from "../components/ModernCard";
-import ModernLoading from "../components/ModernLoading";
+import LayoutWithSidebar from "../components/LayoutWithSidebar";
+import Aula from "./Aula";
 import { apiService } from '../services/api.service';
 
 const Home = () => {
@@ -16,6 +15,7 @@ const Home = () => {
           throw new Error("No se pudieron cargar los laboratorios");
         }
         const data = await response.json();
+        console.log(data)
         setLaboratorios(data);
       } catch (error) {
         console.error("Error al cargar los laboratorios:", error);
@@ -29,68 +29,38 @@ const Home = () => {
 
   if (loading) {
     return (
-      <ModernLayout title="Laboratorios">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="skeleton h-64 rounded-2xl" />
-          ))}
+      <LayoutWithSidebar>
+        <div className="loading-message">
+          Cargando laboratorios...
         </div>
-      </ModernLayout>
+      </LayoutWithSidebar>
     );
   }
 
   return (
-    <ModernLayout title="Laboratorios">
-      {/* Hero Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-text-primary mb-6">
-          Laboratorios de <span className="text-primary">Innovación</span>
-        </h1>
-        <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-8">
-          Explora nuestros espacios de aprendizaje práctico equipados con tecnología de última generación.
-        </p>
-        
-        <div className="flex items-center justify-center space-x-8 mb-8">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-success rounded-full" />
-            <span className="text-sm text-text-secondary">4 Laboratorios</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-primary rounded-full" />
-            <span className="text-sm text-text-secondary">24/7 Disponibles</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Labs Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-        {laboratorios.map((lab, index) => (
-          <div 
-            key={lab.id} 
-            className="cursor-pointer"
-            onClick={() => window.location.hash = `/detalle-laboratorio/${lab.id}`}
-          >
-            <LabCard lab={lab} />
-          </div>
+    <LayoutWithSidebar>
+      <h2 className="loading-message">Conoce los Laboratorios</h2>
+      <p className="loading-message">
+        Los laboratorios de LABS TI son espacios interactivos para aprender y practicar habilidades 
+        en tecnología e informática mediante actividades guiadas y simulaciones.
+      </p>
+      
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gap: '20px',
+        marginBottom: '30px'
+      }}>
+        {laboratorios.map((laboratorio) => (
+          <Aula 
+            key={laboratorio.id}
+            id={laboratorio.id}
+            title={laboratorio.nombre} 
+            imagen={laboratorio.foto1}
+          />
         ))}
       </div>
-
-      {/* Features Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="bg-surface p-6 rounded-2xl text-center">
-          <div className="text-4xl font-bold text-primary mb-2">15+</div>
-          <div className="text-text-secondary">Cursos</div>
-        </div>
-        <div className="bg-surface p-6 rounded-2xl text-center">
-          <div className="text-4xl font-bold text-success mb-2">500+</div>
-          <div className="text-text-secondary">Estudiantes</div>
-        </div>
-        <div className="bg-surface p-6 rounded-2xl text-center">
-          <div className="text-4xl font-bold text-accent mb-2">98%</div>
-          <div className="text-text-secondary">Satisfacción</div>
-        </div>
-      </div>
-    </ModernLayout>
+    </LayoutWithSidebar>
   );
 };
 

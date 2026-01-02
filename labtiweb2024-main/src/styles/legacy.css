@@ -1,0 +1,442 @@
+/* Legacy CSS Recovery - Preserve Existing Functionality */
+
+/* Reset original styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+  color: #000000;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern color scheme */
+:root {
+  --primary: #FF9500;
+  --primary-soft: #FFB347;
+  --primary-hover: #E68500;
+  --background: #0F1115;
+  --surface: #161A22;
+  --surface-soft: #1E2330;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-muted: #6B7280;
+  --border-color: rgba(161, 161, 170, 0.2);
+  --border-hover: rgba(161, 161, 170, 0.3);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-primary: 0 4px 14px rgba(255, 149, 0, 0.25);
+  --radius: 8px;
+  --transition: 200ms ease;
+}
+
+/* Apply modern colors to existing elements */
+body {
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+/* Preserve existing component styles but enhance them */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.sidebar:hover {
+  border-color: var(--border-hover);
+}
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+.content {
+  color: var(--text-primary);
+  background: var(--background);
+}
+
+/* Enhanced loading state */
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+/* Enhanced card improvements */
+.card-improved {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.card-improved:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-hover);
+}
+
+/* Enhanced button improvements */
+.btn-improved {
+  background: var(--primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-primary);
+}
+
+.btn-improved:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-improved:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Enhanced input improvements */
+.input-improved {
+  background: rgba(30, 35, 48, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 16px;
+  transition: var(--transition);
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.input-improved::placeholder {
+  color: var(--text-muted);
+}
+
+.input-improved:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(255, 149, 0, 0.5);
+}
+
+/* Enhanced responsive design */
+@media (min-width:768px) {
+  .content {
+    padding: 32px;
+  }
+}
+
+@media (min-width:1024px) {
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Modern animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Enhanced grid */
+.grid-improved {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Modern scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-soft);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Modern error states */
+.error-message {
+  background: #FEE2E2;
+  color: #DC2626;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid #FCA5A5;
+  margin: 8px 0;
+  box-shadow: var(--shadow);
+}
+
+/* Modern success states */
+.success-message {
+  background: #D4EDDA;
+  color: #155724;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid #C3E6CB;
+  margin: 8px 0;
+  box-shadow: var(--shadow);
+}
+
+/* Legacy compatibility with enhanced styles */
+.aula,
+.cursos,
+.manual,
+.material {
+  transition: var(--transition);
+}
+
+.aula:hover,
+.cursos:hover,
+.manual:hover,
+.material:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Modern headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Modern links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* Modern text content */
+p {
+  margin-bottom: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+  color: #000000;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Preserve existing component styles */
+.sidebar {
+  /* Keep existing sidebar styles intact */
+}
+
+.topbar {
+  /* Keep existing topbar styles intact */
+}
+
+.content {
+  /* Keep existing content styles intact */
+}
+
+/* Only add minimal improvements that don't break existing layout */
+
+/* Loading state improvement */
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-weight: 500;
+  color: #666;
+}
+
+/* Card improvements without breaking existing structure */
+.card-improved {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-improved:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Button improvements */
+.btn-improved {
+  background: #FF9500;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-improved:hover:not(:disabled) {
+  background: #E68500;
+  transform: translateY(-1px);
+}
+
+.btn-improved:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Input improvements */
+.input-improved {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.input-improved:focus {
+  outline: none;
+  border-color: #FF9500;
+  box-shadow: 0 0 0 2px rgba(255,149,0,0.2);
+}
+
+/* Responsive improvements */
+@media (min-width: 768px) {
+  .content {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Subtle animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Grid improvements */
+.grid-improved {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Legacy compatibility */
+.aula,
+.cursos,
+.manual,
+.material {
+  /* Ensure existing components maintain their behavior */
+}
+
+/* Error states */
+.error-message {
+  background: #FEE2E2;
+  color: #DC2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #FCA5A5;
+  margin: 8px 0;
+}
+
+/* Success states */
+.success-message {
+  background: #D4EDDA;
+  color: #155724;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #C3E6CB;
+  margin: 8px 0;
+}
+
+/* Scrollbar improvement */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF9500;
+}
