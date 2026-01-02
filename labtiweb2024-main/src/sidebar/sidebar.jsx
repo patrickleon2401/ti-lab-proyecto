@@ -60,7 +60,7 @@ const Sidebar = () => {
   return (
     <div style={styles.sidebar}>
       <a
-        href="/"
+        href="#"
         style={{
           ...styles.navItem,
           ...(hovered === 0 ? styles.navItemHover : {}),
