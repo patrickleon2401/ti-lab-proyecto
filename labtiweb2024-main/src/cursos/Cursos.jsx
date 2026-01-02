@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../sidebar/sidebar";
-import TopBar from "../topbar/TopBar";
+import LayoutWithSidebar from "../components/LayoutWithSidebar";
+import Loading from "../components/Loading";
 import CursoCard from "./CursoCard"; // Asegúrate de importar el nuevo componente CursoCard
 import { apiService } from '../services/api.service';
 const Cursos = () => {
@@ -23,34 +23,26 @@ const Cursos = () => {
 
   // Mientras se cargan los cursos, mostramos un mensaje de "cargando"
   if (loading) {
-    return <div>Cargando cursos...</div>;
+    return <Loading message="Cargando cursos..." />;
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <TopBar />
-  
-      <div style={{ display: 'flex', flexGrow: 1 }}>
-        <Sidebar />
-  
-        <div style={{ marginTop: '64px', padding: '20px', flexGrow: 1, overflowY: 'auto' }}>
-          <h2>Cursos</h2>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)', // Tres elementos por fila
-              gap: '20px', // Espacio entre las tarjetas
-              marginTop: '10px',
-              // Si las tarjetas tienen un tamaño mínimo, puedes poner un límite a la fila
-            }}
-          >
-            {cursos.map((curso) => (
-              <CursoCard key={curso.id} id={curso.id} curso={curso} />
-            ))}
-          </div>
-        </div>
+    <LayoutWithSidebar className="content" style={{ marginTop: '64px', padding: '20px', flexGrow: 1, overflowY: 'auto' }}>
+      <h2>Cursos</h2>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)', // Tres elementos por fila
+          gap: '20px', // Espacio entre las tarjetas
+          marginTop: '10px',
+          // Si las tarjetas tienen un tamaño mínimo, puedes poner un límite a la fila
+        }}
+      >
+        {cursos.map((curso) => (
+          <CursoCard key={curso.id} id={curso.id} curso={curso} />
+        ))}
       </div>
-    </div>
+    </LayoutWithSidebar>
   );
 };
 
