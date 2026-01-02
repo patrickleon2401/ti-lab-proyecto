@@ -206,11 +206,14 @@ const [loading, setLoading] = useState(true);
 - **API Endpoint**: `/back/obtener_laboratorio1/:id`
 
 #### AdminInterface (`AdminHome/AdminInterface.jsx`)
-- **Purpose**: Admin dashboard (placeholder)
+- **Purpose**: Admin dashboard with session management
 - **Key Features**:
-  - Simple placeholder interface
+  - Admin-only access control
+  - Logout functionality
   - Orange-themed design
-  - Accessible only to admin users
+  - Session security verification
+- **Authentication**: Automatic redirect if no admin session exists
+- **Logout**: Clears localStorage and redirects to home
 
 ## Configuration
 
@@ -358,6 +361,45 @@ export const laboratoriosMock = [
 ];
 ```
 
+## Authentication & Session Management
+
+### Authentication System
+```javascript
+// src/mock/auth.mock.js - Mock authentication
+const result = await authMock.login(email, password);
+if (result.success) {
+  localStorage.setItem('usuario', JSON.stringify(data));
+}
+```
+
+### Session Storage Pattern
+```javascript
+// User session stored in localStorage
+const storedUser = localStorage.getItem('usuario');
+const usuario = JSON.parse(storedUser);
+// usuario contains: { id, email, rol, nombre }
+```
+
+### Role-Based Access Control
+```javascript
+// Admin route protection
+useEffect(() => {
+  const storedUser = localStorage.getItem('usuario');
+  if (!storedUser || !JSON.parse(storedUser)?.rol === 'admin') {
+    navigate('/', { replace: true });
+  }
+}, [navigate]);
+```
+
+### Logout Implementation
+```javascript
+// src/AdminHome/AdminInterface.jsx
+const handleLogout = () => {
+  localStorage.removeItem('usuario');  // Clear session
+  navigate('/', { replace: true });   // Redirect to home
+};
+```
+
 ### Component Pattern (Updated)
 ```javascript
 const [data, setData] = useState([]);
@@ -407,12 +449,16 @@ const handleClick = (id) => {
 3. **Loading states**: Implement loading indicators for API calls
 4. **Error handling**: Include try-catch blocks for API operations
 5. **Consistent naming**: Use camelCase for components and variables
+6. **Authentication guards**: Add session verification for protected routes
+7. **Session management**: Implement logout where appropriate
 
 ### State Management
 - **Local State**: Use `useState` for component-specific data
 - **Side Effects**: Use `useEffect` for API calls and subscriptions
 - **Navigation**: Use `useNavigate` from React Router
-- **Authentication**: Store user data in localStorage
+- **Authentication**: Store user data in localStorage with `usuario` key
+- **Session Cleanup**: Remove `usuario` key for logout
+- **Route Protection**: Verify admin role with automatic redirects
 
 ### Styling Best Practices
 1. **Component CSS**: Create separate CSS file for each component
@@ -435,6 +481,13 @@ const handleClick = (id) => {
 2. Add method to `src/services/api.service.js`
 3. Add mock data to appropriate file in `src/mock/`
 4. Use existing component pattern with `apiService`
+
+### Adding Protected Routes
+1. Add session verification in `useEffect`
+2. Check `localStorage.getItem('usuario')` exists
+3. Verify `JSON.parse(usuario).rol === 'admin'` for admin routes
+4. Redirect with `navigate('/', { replace: true })` if unauthorized
+5. Implement logout with `localStorage.removeItem('usuario')`
 
 ### Using Mock Data for Development
 1. Set `USE_MOCK = true` in `src/constants/env.js`
@@ -494,6 +547,8 @@ npm start
 - JWT tokens stored in localStorage
 - Role-based access control
 - Session management on client side
+- Admin session verification with automatic protection
+- Logout functionality with session cleanup
 
 ### API Security
 - Use HTTPS in production
@@ -527,6 +582,8 @@ npm start
 6. **PWA**: Add progressive web app features
 7. **Custom Hooks**: Extract more logic to custom hooks
 8. **Component Library**: Expand reusable component set
+9. **Authentication System**: Implement comprehensive auth middleware
+10. **Role Management**: Expand role-based access control
 
 ### Performance Optimizations
 1. **Code Splitting**: Implement lazy loading
@@ -543,6 +600,8 @@ npm start
 4. **Routing**: Ensure hash router is used for GitHub Pages
 5. **Styling**: Check CSS imports and inline styles
 6. **Authentication**: Verify localStorage and token handling
+7. **Admin Access**: Check `localStorage.getItem('usuario')` contains admin role
+8. **Logout Issues**: Verify `localStorage.removeItem('usuario')` is called
 
 ### Development Mode Switch
 ```javascript
@@ -558,6 +617,10 @@ export const USE_MOCK = true;   // Development (no backend)
 - Verify mock data structure in `src/mock/` files
 - Test responsive design with device emulation
 - Mock data works completely offline
+- **Authentication Debug**: Check `localStorage.getItem('usuario')` in DevTools Console
+- **Session Debug**: Verify `JSON.parse(localStorage.getItem('usuario')).rol === 'admin'` for admin access
+- **Logout Debug**: Ensure `localStorage.removeItem('usuario')` is called and executed
+- **Redirect Debug**: Check for automatic redirects from protected routes
 
 This guide provides comprehensive documentation for the LABS TI React project, enabling efficient development, maintenance, and enhancement of the platform.
 
@@ -577,9 +640,12 @@ The LABS TI React project underwent conservative refactoring to improve code qua
 3. **Consistency**: Standardized components and patterns
 4. **Team Collaboration**: Clear structure and documentation
 5. **Rapid Development**: Mock data enables fast prototyping
+6. **Security**: Proper authentication and session management
+7. **User Experience**: Complete authentication flow with logout
 
 ### Refactoring Philosophy Applied
 - **Conservative Approach**: Zero functional changes
 - **Backward Compatibility**: All existing behavior preserved
 - **Incremental Changes**: Small, verifiable commits
 - **Legacy Respect**: Maintained original architecture
+- **Security First**: Authentication and session integrity maintained
