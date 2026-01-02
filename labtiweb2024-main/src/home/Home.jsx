@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../sidebar/sidebar";
-import TopBar from "../topbar/TopBar";
+import LayoutWithSidebar from "../components/LayoutWithSidebar";
 import "./Home.css";  // Importamos el archivo CSS
 import Aula from "./Aula";
 import { apiService } from '../services/api.service';
@@ -28,37 +27,25 @@ const Home = () => {
   }, []);  // El arreglo vacío [] asegura que solo se ejecute una vez cuando el componente se monte
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      {/* TopBar en la parte superior */}
-      <TopBar className="topbar" />
-      
-      {/* Contenedor para el Sidebar y el contenido principal */}
-      <div style={{ display: 'flex', flexGrow: 1 }}>
-        {/* Sidebar */}
-        <Sidebar className="sidebar" />
-
-        {/* Contenido principal que ocupa el espacio restante */}
-        <div className="content">
-          <h2>Conoce los Laboratorios</h2>
-          <p>Los laboratorios de LABS TI son espacios interactivos para aprender y practicar habilidades 
-            en tecnología e informática mediante actividades guiadas y simulaciones.</p>
+    <LayoutWithSidebar>
+      <h2>Conoce los Laboratorios</h2>
+      <p>Los laboratorios de LABS TI son espacios interactivos para aprender y practicar habilidades 
+        en tecnología e informática mediante actividades guiadas y simulaciones.</p>
+        
+          
+              {/* Mapear los laboratorios y pasarlos como props a Aula */}
+              {laboratorios.map((laboratorio) => (
+                <Aula 
+                  key={laboratorio.id}
+                  id={laboratorio.id}
+                  title={laboratorio.nombre} 
+                  
+                  imagen={laboratorio.foto1}  // Puedes elegir cuál foto mostrar
+                />
+              ))}
             
-              
-                {/* Mapear los laboratorios y pasarlos como props a Aula */}
-                {laboratorios.map((laboratorio) => (
-                  <Aula 
-                    key={laboratorio.id}
-                    id={laboratorio.id}
-                    title={laboratorio.nombre} 
-                    
-                    imagen={laboratorio.foto1}  // Puedes elegir cuál foto mostrar
-                  />
-                ))}
-              
-            
-        </div>
-      </div>
-    </div>
+          
+    </LayoutWithSidebar>
   );
 };
 
