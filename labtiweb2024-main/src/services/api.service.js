@@ -2,7 +2,7 @@
 // This service handles the switch between mock data and real backend
 
 import { USE_MOCK } from '../constants/env.js';
-import { pcdeApoyo } from '../config.js';
+import { ENDPOINTS } from '../constants/endpoints.js';
 
 // Import mock data
 import { laboratoriosMock, getLaboratorioByIdMock } from '../mock/laboratorios.mock.js';
@@ -11,15 +11,18 @@ import { componentesMock, getComponenteByIdMock } from '../mock/componentes.mock
 import { materialesMock, getMaterialesByCursoIdMock } from '../mock/materiales.mock.js';
 import { authMock } from '../mock/auth.mock.js';
 
+// Import utils
+import { delay } from '../utils/delay.js';
+
 // Helper to simulate fetch behavior with mock data
-const mockFetch = (data, delay = 800) => {
+const mockFetch = (data, delayMs = 800) => {
   return new Promise((resolve) => {
-    setTimeout(() => {
+    delay(delayMs).then(() => {
       resolve({
         ok: true,
         json: () => Promise.resolve(data)
       });
-    }, delay);
+    });
   });
 };
 
@@ -30,7 +33,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(laboratoriosMock);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_laboratorios`);
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.LABORATORIOS}`);
   },
 
   async getLaboratorioById(id) {
@@ -38,7 +41,7 @@ export const apiService = {
       const laboratorio = getLaboratorioByIdMock(id);
       return mockFetch(laboratorio);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_laboratorio1/${id}`);
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.LABORATORIO_BY_ID(id)}`);
   },
 
   // Courses
@@ -46,7 +49,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(cursosMock);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_cursos`);
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.CURSOS}`);
   },
 
   // Components
@@ -54,7 +57,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(componentesMock);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_componentes`);
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.COMPONENTES}`);
   },
 
   async getComponenteById(id) {
@@ -62,7 +65,7 @@ export const apiService = {
       const componente = getComponenteByIdMock(id);
       return mockFetch(componente);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_componente1/${id}`);
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.COMPONENTE_BY_ID(id)}`);
   },
 
   // Materials
@@ -70,7 +73,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(materialesMock);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_materiales`);
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.MATERIALES}`);
   },
 
   async getMaterialesByCurso(cursoId) {
@@ -78,7 +81,7 @@ export const apiService = {
       const materiales = getMaterialesByCursoIdMock(cursoId);
       return mockFetch(materiales);
     }
-    return fetch(`http://${pcdeApoyo}/back/obtener_materiales_por_curso/`, {
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.MATERIALES_BY_CURSO}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +103,7 @@ export const apiService = {
         };
       }
     }
-    return fetch(`http://${pcdeApoyo}/back/login/`, {
+    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.LOGIN}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
