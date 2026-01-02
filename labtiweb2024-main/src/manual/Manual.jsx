@@ -1,44 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../sidebar/sidebar";
-import TopBar from "../topbar/TopBar";
+import LayoutWithSidebar from "../components/LayoutWithSidebar";
+import Loading from "../components/Loading";
+import Card from "../components/Card";
 import { apiService } from '../services/api.service';
+import { IMAGE_PLACEHOLDER_STYLES, IMAGE_STYLES } from '../constants/ui.js';
 import './Manual.css'; // Asegúrate de crear este archivo CSS
 import { useNavigate } from "react-router-dom"; // Para redirigir cuando el usuario haga clic
 
 const ComponenteCard = ({ componente, onClick }) => {
-  const cardStyle = {
-    backgroundColor: '#f4f4f4',
-    padding: '15px',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    width: '100%',
-    maxWidth: '500px',
-    margin: '0 auto',
-    boxSizing: 'border-box',
-    height: 'auto',
-  };
-  
-  const imagePlaceholderStyle = {
-    width: '100%',
-    height: '200px',
-    overflow: 'hidden',
-    borderRadius: '8px',
-    position: 'relative',
-  };
-
-  const imageStyle = {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  };
-
   return (
-    <div style={cardStyle} onClick={() => onClick(componente)}>
-      <div style={imagePlaceholderStyle}>
-        <img src={componente.foto1} alt={componente.nombre} style={imageStyle} />
+    <Card onClick={() => onClick(componente)}>
+      <div style={IMAGE_PLACEHOLDER_STYLES}>
+        <img src={componente.foto1} alt={componente.nombre} style={IMAGE_STYLES} />
       </div>
       <h3>{componente.nombre}</h3>
-    </div>
+    </Card>
   );
 };
 
@@ -71,7 +47,7 @@ const Manual = () => {
 
   // Si estamos cargando, mostramos un mensaje de carga
   if (loading) {
-    return <div>Cargando componentes...</div>;
+    return <Loading message="Cargando componentes..." />;
   }
 
   // Si hay un componente seleccionado, mostramos la vista de detalles
@@ -79,32 +55,26 @@ const Manual = () => {
 
   // Si no hay componente seleccionado, mostramos todos los componentes
   return (
-    <div className="manual-container">
-      <TopBar className="topbar" />
-      <div style={{ display: 'flex', flexGrow: 1 }}>
-        <Sidebar className="sidebar" />
-        <div className="content">
-          <h2>Componentes de LABS TI</h2>
-          <p>Consulta los componentes y sus manuales correspondientes.</p>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '20px',
-              marginTop: '20px',
-            }}
-          >
-            {componentes.map((componente) => (
-              <ComponenteCard
-                key={componente.id}
-                componente={componente}
-                onClick={handleComponenteClick}
-              />
-            ))}
-          </div>
-        </div>
+    <LayoutWithSidebar className="content manual-container">
+      <h2>Componentes de LABS TI</h2>
+      <p>Consulta los componentes y sus manuales correspondientes.</p>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '20px',
+          marginTop: '20px',
+        }}
+      >
+        {componentes.map((componente) => (
+          <ComponenteCard
+            key={componente.id}
+            componente={componente}
+            onClick={handleComponenteClick}
+          />
+        ))}
       </div>
-    </div>
+    </LayoutWithSidebar>
   );
 };
 
