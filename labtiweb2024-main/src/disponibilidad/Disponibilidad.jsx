@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from "../sidebar/sidebar";
 import TopBar from "../topbar/TopBar";
 import "./Disponibilidad.css";
-
+import LayoutWithSidebar from "../components/LayoutWithSidebar";
 const Disponibilidad = () => {
   const horario = [
     ["7 - 8", "", "", "", "", "", ""],
@@ -24,15 +24,9 @@ const Disponibilidad = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        {/* TopBar en la parte superior */}
-        <TopBar />
-
+      <LayoutWithSidebar>
         {/* Contenedor para el Sidebar y el contenido principal */}
-        <div style={{ display: 'flex', flexGrow: 1 }}>
-          {/* Sidebar */}
-          <Sidebar />
-
+       
           {/* Contenido principal que ocupa el espacio restante */}
           <div style={{ marginTop: '64px', padding: '20px', flexGrow: 1 }}>
             <div className="container">
@@ -73,8 +67,8 @@ const Disponibilidad = () => {
               <p className="note">Nota: Sujeto a modificaciones por recuperaciones, reprogramaciones, eventos, etc.</p>
             </div>
           </div>
-        </div>
-      </div>
+          </LayoutWithSidebar>
+      
     </>
   );
 }

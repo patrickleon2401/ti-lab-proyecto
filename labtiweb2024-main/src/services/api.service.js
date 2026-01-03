@@ -3,7 +3,7 @@
 
 import { USE_MOCK } from '../constants/env.js';
 import { ENDPOINTS } from '../constants/endpoints.js';
-
+import { API_BASE_URL } from '../constants/endpoints.js';
 // Import mock data
 import { laboratoriosMock, getLaboratorioByIdMock } from '../mock/laboratorios.mock.js';
 import { cursosMock } from '../mock/cursos.mock.js';
@@ -33,7 +33,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(laboratoriosMock);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.LABORATORIOS}`);
+    return fetch(`http://localhost:8000/back/obtener_laboratorios`);
   },
 
   async getLaboratorioById(id) {
@@ -41,7 +41,7 @@ export const apiService = {
       const laboratorio = getLaboratorioByIdMock(id);
       return mockFetch(laboratorio);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.LABORATORIO_BY_ID(id)}`);
+    return fetch(`http://localhost:8000/back/obtener_laboratorio1/${id}`);
   },
 
   // Courses
@@ -49,7 +49,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(cursosMock);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.CURSOS}`);
+    return fetch(`${API_BASE_URL}${ENDPOINTS.CURSOS}`);
   },
 
   // Components
@@ -57,7 +57,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(componentesMock);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.COMPONENTES}`);
+    return fetch(`${API_BASE_URL}${ENDPOINTS.COMPONENTES}`);
   },
 
   async getComponenteById(id) {
@@ -65,7 +65,7 @@ export const apiService = {
       const componente = getComponenteByIdMock(id);
       return mockFetch(componente);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.COMPONENTE_BY_ID(id)}`);
+    return fetch(`${API_BASE_URL}${ENDPOINTS.COMPONENTE_BY_ID(id)}`);
   },
 
   // Materials
@@ -73,7 +73,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(materialesMock);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.MATERIALES}`);
+    return fetch(`${API_BASE_URL}${ENDPOINTS.MATERIALES}`);
   },
 
   async getMaterialesByCurso(cursoId) {
@@ -81,7 +81,7 @@ export const apiService = {
       const materiales = getMaterialesByCursoIdMock(cursoId);
       return mockFetch(materiales);
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.MATERIALES_BY_CURSO}`, {
+    return fetch(`${API_BASE_URL}${ENDPOINTS.MATERIALES_BY_CURSO}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export const apiService = {
         };
       }
     }
-    return fetch(`${ENDPOINTS.API_BASE_URL}${ENDPOINTS.LOGIN}`, {
+    return fetch(`${API_BASE_URL}${ENDPOINTS.LOGIN}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

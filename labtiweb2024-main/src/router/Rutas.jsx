@@ -3,7 +3,7 @@ import Home from "../home/Home"
 import Disponibilidad from "../disponibilidad/Disponibilidad"
 import Cursos from "../cursos/Cursos"
 import Manual from "../manual/Manual"
-import Material from "../material/Material"
+
 import ComponenteDetalle from "../manual/ComponenteDetalle";
 import DetalleLaboratorio from "../home/DetalleLaboratorio";
 import DetalleCurso from "../cursos/DetalleCurso";
@@ -28,10 +28,7 @@ const Rutas = () => {
             path: "/Manuales",
             element: <Manual/>
         },
-        {
-            path: "/Materiales",
-            element: <Material/>
-        },
+        
         {
             path: "/componentes/:id",  // La ruta con un parámetro dinámico ':id'
             element: <ComponenteDetalle />  // Componente que se mostrará al hacer click
