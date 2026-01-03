@@ -31,9 +31,10 @@
     text-align: center;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 1500px;
-    height: 500px;
-    max-width: 900px; /* Aumenta el ancho máximo de la tarjeta */
+    width: 100%;
+    max-width: 400px; /* Ancho máximo responsivo */
+    height: auto;
+    min-height: 400px;
     margin: 0 auto; /* Centra las tarjetas */
   }
   
@@ -93,7 +94,7 @@
   /* Para pantallas pequeñas (móviles) */
   @media (max-width: 767px) {
     .aula-container {
-      padding: 20px;
+      padding: 15px;
     }
   
     .aula-title {
@@ -107,6 +108,11 @@
     .aula-card {
       max-width: 100%;
       padding: 20px;
+      min-height: 350px;
+    }
+  
+    .aula-image-placeholder {
+      height: 250px;
     }
   
     .aula-nombre {

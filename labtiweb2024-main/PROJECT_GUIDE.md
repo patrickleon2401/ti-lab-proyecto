@@ -11,7 +11,8 @@ This is a React-based web application for "LABS TI" - a laboratory management pl
 - **React Router DOM 6.27.0** - Hash-based routing
 - **React Slick 0.30.2** - Image carousel functionality
 - **React Icons 5.3.0** - UI icons
-- **PDF Libraries** - @react-pdf-viewer for PDF viewing, jsPDF for PDF generation
+- **PDF Libraries** - @react-pdf-viewer/core 3.12.0 for PDF viewing, jsPDF for PDF generation
+- **GitHub Pages** - gh-pages 6.3.0 for deployment
 
 ### Backend Integration
 - **RESTful API** communication with Django backend
@@ -19,6 +20,7 @@ This is a React-based web application for "LABS TI" - a laboratory management pl
 - **Base URL Configuration** - Centralized in `config.js`
 - **Authentication** - JWT-based login system with localStorage persistence
 - **Development Isolation** - Works 100% without backend via `USE_MOCK` flag
+- **AI Assistant Integration** - TILab Assistant with chat interface (placeholder for AI backend)
 
 ## Project Structure
 
@@ -77,8 +79,13 @@ src/
 ├── material/
 │   ├── Material.jsx       # Course materials
 │   └── Material.css
+├── tilabAssistant/
+│   ├── TILabAssistant.jsx # AI chat interface
+│   └── TILabAssistant.css # Chat styling
 ├── AdminHome/
 │   └── AdminInterface.jsx # Admin dashboard
+├── parafuturoadmin.jsx/
+│   └── amdin.jsx         # Alternative Material with PDF viewer
 └── Images/
     └── iot.jpg            # Static images
 ```
@@ -98,6 +105,7 @@ const router = createHashRouter([
   { path: "/detalle-laboratorio/:id", element: <DetalleLaboratorio /> },
   { path: "/detalle-curso/:id", element: <DetalleCurso /> },
   { path: "/AdminInterface", element: <AdminInterface /> },
+  { path: "/tilab-assistant", element: <TILabAssistant /> },
 ]);
 ```
 
@@ -120,6 +128,9 @@ const router = createHashRouter([
   - Interactive hover states
   - Selected item highlighting
   - Links to main sections
+  - Robot icon (FaRobot) for TILab Assistant
+- **Navigation Items**: Inicio, Cursos, Disponibilidad, Manuales, TILab Assistant
+- **Note**: Missing "Materiales" link in sidebar navigation
 - **Styling**: Gray background (#D9D9D9), vertical layout
 
 #### LoginPanel (`topbar/LoginPanel.jsx`)
@@ -214,6 +225,28 @@ const [loading, setLoading] = useState(true);
   - Session security verification
 - **Authentication**: Automatic redirect if no admin session exists
 - **Logout**: Clears localStorage and redirects to home
+
+#### TILabAssistant (`tilabAssistant/TILabAssistant.jsx`)
+- **Purpose**: AI-powered chat assistant for laboratory support
+- **Key Features**:
+  - Real-time chat interface with message history
+  - Timestamps for all messages
+  - User/bot message differentiation (orange/gray colors)
+  - Responsive design for mobile devices
+  - Smooth scroll to latest messages
+  - Input validation and disabled state handling
+  - Currently uses simulated responses (AI integration placeholder)
+- **Styling**: Dedicated CSS with chat bubbles, animations, and responsive breakpoints
+- **Future**: Real AI endpoint integration planned
+
+#### Alternative Material Component (`parafuturoadmin.jsx/amdin.jsx`)
+- **Purpose**: Enhanced material management with PDF viewer
+- **Key Features**:
+  - Static inventory table with 12 laboratory items
+  - PDF viewer integration using @react-pdf-viewer/core
+  - Local file upload functionality
+  - Direct layout (not using LayoutWithSidebar pattern)
+- **Note**: Alternative implementation to main Material component
 
 ## Configuration
 
@@ -440,6 +473,7 @@ const handleClick = (id) => {
 | `/back/obtener_componentes` | GET | Fetch all components | Manual |
 | `/back/obtener_componente1/:id` | GET | Fetch component details | ComponenteDetalle |
 | `/back/login` | POST | User authentication | LoginPanel |
+| `/back/ai-assistant` | POST | AI chat responses (planned) | TILabAssistant |
 
 ## Development Guidelines
 
@@ -520,6 +554,19 @@ npm start
 # Real Backend Mode
 # Set USE_MOCK = false in src/constants/env.js
 npm start
+
+# Deploy to GitHub Pages
+npm run deploy
+```
+
+### GitHub Pages Deployment
+```bash
+# Pre-deploy build and deploy
+npm run predeploy
+npm run deploy
+
+# Deploy URL configured in package.json
+"homepage": "https://patrickleon2401.github.io/ti-lab-proyecto"
 ```
 
 ### Testing Guidelines
@@ -585,6 +632,14 @@ npm start
 9. **Authentication System**: Implement comprehensive auth middleware
 10. **Role Management**: Expand role-based access control
 
+### TILab Assistant Roadmap
+1. **AI Integration**: Connect to real AI backend endpoint
+2. **Context Awareness**: Integrate with laboratory data
+3. **Multi-language Support**: Spanish/English interface
+4. **Voice Input**: Add speech-to-text functionality
+5. **Knowledge Base**: Integrate with manuals and materials
+6. **Smart Suggestions**: Contextual help recommendations
+
 ### Performance Optimizations
 1. **Code Splitting**: Implement lazy loading
 2. **Image Optimization**: Compress and optimize images
@@ -621,8 +676,41 @@ export const USE_MOCK = true;   // Development (no backend)
 - **Session Debug**: Verify `JSON.parse(localStorage.getItem('usuario')).rol === 'admin'` for admin access
 - **Logout Debug**: Ensure `localStorage.removeItem('usuario')` is called and executed
 - **Redirect Debug**: Check for automatic redirects from protected routes
+- **TILab Assistant Debug**: Check `delay` utility for simulated responses
+- **PDF Viewer Debug**: Ensure @react-pdf-viewer/core is properly loaded
+- **Navigation Debug**: Check sidebar links match routes in Rutas.jsx
 
 This guide provides comprehensive documentation for the LABS TI React project, enabling efficient development, maintenance, and enhancement of the platform.
+
+---
+
+## Recent Updates (Current Version)
+
+### New Features Added
+1. **TILab Assistant**: Complete AI chat interface with responsive design
+2. **Enhanced PDF Management**: Alternative material component with PDF viewer
+3. **GitHub Pages Deployment**: Automated deployment configuration
+4. **Navigation Updates**: Added TILab Assistant to sidebar navigation
+
+### Technical Improvements
+1. **React PDF Viewer**: Integrated @react-pdf-viewer/core for PDF rendering
+2. **Deployment Pipeline**: Pre-deploy and deploy scripts for GitHub Pages
+3. **Enhanced Styling**: Dedicated CSS for chat interface with animations
+4. **Component Architecture**: Maintained consistent patterns for new features
+
+### Known Issues & TODOs
+1. **Missing Navigation**: "Materiales" link not present in sidebar
+2. **AI Integration**: TILab Assistant using placeholder responses
+3. **Component Duplication**: Alternative Material component purpose unclear
+4. **Route Gaps**: Sidebar navigation indexing inconsistency
+
+### Development Status
+- ✅ Core functionality fully operational
+- ✅ Mock data system working perfectly
+- ✅ Authentication and session management complete
+- ✅ Responsive design implemented across components
+- ⏳ AI backend integration pending
+- ⏳ PDF viewer deployment testing needed
 
 ---
 

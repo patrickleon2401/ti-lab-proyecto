@@ -62,15 +62,15 @@ const styles = {
   },
   title: {
     fontSize: '24px',
-    margin: '50px',
+    margin: '0',
     textAlign: 'center',
     flexGrow: 1,
-    marginLeft: '410px',
   },
   universityLink: {
-    margin: '30px',
+    margin: '0',
     padding: '0',
     width: '120px',
+    flexShrink: 0,
   },
   universityImage: {
     width: '120px',

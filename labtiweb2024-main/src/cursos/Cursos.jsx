@@ -32,10 +32,12 @@ const Cursos = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)', // Tres elementos por fila
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', // Responsive grid
           gap: '20px', // Espacio entre las tarjetas
           marginTop: '10px',
-          // Si las tarjetas tienen un tamaño mínimo, puedes poner un límite a la fila
+          width: '100%',
+          maxWidth: 'calc(100vw - 240px)', // Account for sidebar width
+          boxSizing: 'border-box',
         }}
       >
         {cursos.map((curso) => (

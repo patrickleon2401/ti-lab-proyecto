@@ -56,15 +56,18 @@ const Manual = () => {
   // Si no hay componente seleccionado, mostramos todos los componentes
   return (
     <LayoutWithSidebar>
-      <div className="content manual-container">
+      <div className="content">
       <h2>Componentes de LABS TI</h2>
       <p>Consulta los componentes y sus manuales correspondientes.</p>
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', // Responsive grid
           gap: '20px',
           marginTop: '20px',
+          width: '100%',
+          maxWidth: 'calc(100vw - 240px)', // Account for sidebar width
+          boxSizing: 'border-box',
         }}
       >
         {componentes.map((componente) => (

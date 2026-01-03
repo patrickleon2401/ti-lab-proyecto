@@ -32,19 +32,18 @@ const Home = () => {
       <p>Los laboratorios de LABS TI son espacios interactivos para aprender y practicar habilidades 
         en tecnología e informática mediante actividades guiadas y simulaciones.</p>
         
-          
-              {/* Mapear los laboratorios y pasarlos como props a Aula */}
-              {laboratorios.map((laboratorio) => (
-                <Aula 
-                  key={laboratorio.id}
-                  id={laboratorio.id}
-                  title={laboratorio.nombre} 
-                  
-                  imagen={laboratorio.foto1}  // Puedes elegir cuál foto mostrar
-                />
-              ))}
+      <div className="card-list">
+        {/* Mapear los laboratorios y pasarlos como props a Aula */}
+        {laboratorios.map((laboratorio) => (
+          <Aula 
+            key={laboratorio.id}
+            id={laboratorio.id}
+            title={laboratorio.nombre} 
             
-          
+            imagen={laboratorio.foto1}  // Puedes elegir cuál foto mostrar
+          />
+        ))}
+      </div>
     </LayoutWithSidebar>
   );
 };
