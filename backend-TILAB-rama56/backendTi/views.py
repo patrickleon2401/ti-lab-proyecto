@@ -241,3 +241,397 @@ def obtener_materiales_por_curso(request):
             return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
 
     return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+# ==============================
+# ADMIN CRUD ENDPOINTS
+# ==============================
+
+@csrf_exempt
+def admin_laboratorio_create(request):
+    """Crear nuevo laboratorio"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            
+            # Validación de campos requeridos
+            required_fields = ['nombre', 'titulo', 'descripcion', 'foto1', 'foto2', 'foto3']
+            for field in required_fields:
+                if not data.get(field):
+                    return JsonResponse({'error': f'El campo {field} es requerido'}, status=400)
+            
+            # Crear laboratorio
+            laboratorio = Laboratorio.objects.create(
+                nombre=data['nombre'],
+                titulo=data['titulo'],
+                descripcion=data['descripcion'],
+                foto1=data['foto1'],
+                foto2=data['foto2'],
+                foto3=data['foto3']
+            )
+            
+            return JsonResponse({
+                'message': 'Laboratorio creado exitosamente',
+                'id': laboratorio.id,
+                'nombre': laboratorio.nombre,
+                'titulo': laboratorio.titulo
+            }, status=201)
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_laboratorio_update(request, id):
+    """Actualizar laboratorio existente"""
+    if request.method == 'PUT':
+        try:
+            laboratorio = get_object_or_404(Laboratorio, id=id)
+            data = json.loads(request.body)
+            
+            # Campos actualizables
+            updatable_fields = ['nombre', 'titulo', 'descripcion', 'foto1', 'foto2', 'foto3']
+            for field in updatable_fields:
+                if field in data:
+                    setattr(laboratorio, field, data[field])
+            
+            laboratorio.save()
+            
+            return JsonResponse({
+                'message': 'Laboratorio actualizado exitosamente',
+                'id': laboratorio.id,
+                'nombre': laboratorio.nombre,
+                'titulo': laboratorio.titulo
+            })
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Laboratorio.DoesNotExist:
+            return JsonResponse({'error': 'Laboratorio no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_laboratorio_delete(request, id):
+    """Eliminar laboratorio"""
+    if request.method == 'DELETE':
+        try:
+            laboratorio = get_object_or_404(Laboratorio, id=id)
+            laboratorio_name = laboratorio.nombre
+            laboratorio.delete()
+            
+            return JsonResponse({
+                'message': f'Laboratorio "{laboratorio_name}" eliminado exitosamente'
+            })
+            
+        except Laboratorio.DoesNotExist:
+            return JsonResponse({'error': 'Laboratorio no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_curso_create(request):
+    """Crear nuevo curso"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            
+            # Validación de campos requeridos
+            required_fields = ['nombre', 'nivel_curso', 'descripcion', 'foto1', 'foto2']
+            for field in required_fields:
+                if not data.get(field):
+                    return JsonResponse({'error': f'El campo {field} es requerido'}, status=400)
+            
+            # Crear curso
+            curso = Curso.objects.create(
+                nombre=data['nombre'],
+                nivel_curso=data['nivel_curso'],
+                descripcion=data['descripcion'],
+                foto1=data['foto1'],
+                foto2=data['foto2']
+            )
+            
+            return JsonResponse({
+                'message': 'Curso creado exitosamente',
+                'id': curso.id,
+                'nombre': curso.nombre,
+                'nivel_curso': curso.nivel_curso
+            }, status=201)
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_curso_update(request, id):
+    """Actualizar curso existente"""
+    if request.method == 'PUT':
+        try:
+            curso = get_object_or_404(Curso, id=id)
+            data = json.loads(request.body)
+            
+            # Campos actualizables
+            updatable_fields = ['nombre', 'nivel_curso', 'descripcion', 'foto1', 'foto2']
+            for field in updatable_fields:
+                if field in data:
+                    setattr(curso, field, data[field])
+            
+            curso.save()
+            
+            return JsonResponse({
+                'message': 'Curso actualizado exitosamente',
+                'id': curso.id,
+                'nombre': curso.nombre,
+                'nivel_curso': curso.nivel_curso
+            })
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Curso.DoesNotExist:
+            return JsonResponse({'error': 'Curso no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_curso_delete(request, id):
+    """Eliminar curso"""
+    if request.method == 'DELETE':
+        try:
+            curso = get_object_or_404(Curso, id=id)
+            curso_name = curso.nombre
+            curso.delete()
+            
+            return JsonResponse({
+                'message': f'Curso "{curso_name}" eliminado exitosamente'
+            })
+            
+        except Curso.DoesNotExist:
+            return JsonResponse({'error': 'Curso no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_componente_create(request):
+    """Crear nuevo componente"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            
+            # Validación de campos requeridos
+            required_fields = ['nombre', 'foto1', 'foto2', 'laboratorio_id']
+            for field in required_fields:
+                if not data.get(field):
+                    return JsonResponse({'error': f'El campo {field} es requerido'}, status=400)
+            
+            # Validar que el laboratorio existe
+            try:
+                laboratorio = Laboratorio.objects.get(id=data['laboratorio_id'])
+            except Laboratorio.DoesNotExist:
+                return JsonResponse({'error': 'Laboratorio no encontrado'}, status=400)
+            
+            # Crear componente
+            componente = Componente.objects.create(
+                nombre=data['nombre'],
+                foto1=data['foto1'],
+                foto2=data['foto2'],
+                foto3=data.get('foto3', ''),  # Opcional
+                descripcion=data.get('descripcion', ''),  # Opcional
+                laboratorio=laboratorio
+            )
+            
+            return JsonResponse({
+                'message': 'Componente creado exitosamente',
+                'id': componente.id,
+                'nombre': componente.nombre
+            }, status=201)
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_componente_update(request, id):
+    """Actualizar componente existente"""
+    if request.method == 'PUT':
+        try:
+            componente = get_object_or_404(Componente, id=id)
+            data = json.loads(request.body)
+            
+            # Campos actualizables
+            updatable_fields = ['nombre', 'foto1', 'foto2', 'foto3', 'descripcion', 'laboratorio_id']
+            for field in updatable_fields:
+                if field in data:
+                    if field == 'laboratorio_id':
+                        # Validar que el laboratorio existe
+                        try:
+                            laboratorio = Laboratorio.objects.get(id=data[field])
+                            componente.laboratorio = laboratorio
+                        except Laboratorio.DoesNotExist:
+                            return JsonResponse({'error': 'Laboratorio no encontrado'}, status=400)
+                    else:
+                        setattr(componente, field, data[field])
+            
+            componente.save()
+            
+            return JsonResponse({
+                'message': 'Componente actualizado exitosamente',
+                'id': componente.id,
+                'nombre': componente.nombre
+            })
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Componente.DoesNotExist:
+            return JsonResponse({'error': 'Componente no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_componente_delete(request, id):
+    """Eliminar componente"""
+    if request.method == 'DELETE':
+        try:
+            componente = get_object_or_404(Componente, id=id)
+            componente_name = componente.nombre
+            componente.delete()
+            
+            return JsonResponse({
+                'message': f'Componente "{componente_name}" eliminado exitosamente'
+            })
+            
+        except Componente.DoesNotExist:
+            return JsonResponse({'error': 'Componente no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_material_create(request):
+    """Crear nuevo material (PDF metadata)"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            
+            # Validación de campos requeridos
+            required_fields = ['nombre', 'url', 'curso_id']
+            for field in required_fields:
+                if not data.get(field):
+                    return JsonResponse({'error': f'El campo {field} es requerido'}, status=400)
+            
+            # Validar que el curso existe
+            try:
+                curso = Curso.objects.get(id=data['curso_id'])
+            except Curso.DoesNotExist:
+                return JsonResponse({'error': 'Curso no encontrado'}, status=400)
+            
+            # Crear material
+            material = Material.objects.create(
+                nombre=data['nombre'],
+                url=data['url'],  # URL relativa del PDF (ej: /media/manuales/linux.pdf)
+                curso=curso
+            )
+            
+            return JsonResponse({
+                'message': 'Material creado exitosamente',
+                'id': material.id,
+                'nombre': material.nombre,
+                'curso': curso.nombre
+            }, status=201)
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_material_update(request, id):
+    """Actualizar material existente"""
+    if request.method == 'PUT':
+        try:
+            material = get_object_or_404(Material, id=id)
+            data = json.loads(request.body)
+            
+            # Campos actualizables
+            updatable_fields = ['nombre', 'url', 'curso_id']
+            for field in updatable_fields:
+                if field in data:
+                    if field == 'curso_id':
+                        # Validar que el curso existe
+                        try:
+                            curso = Curso.objects.get(id=data[field])
+                            material.curso = curso
+                        except Curso.DoesNotExist:
+                            return JsonResponse({'error': 'Curso no encontrado'}, status=400)
+                    else:
+                        setattr(material, field, data[field])
+            
+            material.save()
+            
+            return JsonResponse({
+                'message': 'Material actualizado exitosamente',
+                'id': material.id,
+                'nombre': material.nombre,
+                'curso': material.curso.nombre
+            })
+            
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato JSON inválido'}, status=400)
+        except Material.DoesNotExist:
+            return JsonResponse({'error': 'Material no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def admin_material_delete(request, id):
+    """Eliminar material"""
+    if request.method == 'DELETE':
+        try:
+            material = get_object_or_404(Material, id=id)
+            material_name = material.nombre
+            material.delete()
+            
+            return JsonResponse({
+                'message': f'Material "{material_name}" eliminado exitosamente'
+            })
+            
+        except Material.DoesNotExist:
+            return JsonResponse({'error': 'Material no encontrado'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'Error del servidor: {str(e)}'}, status=500)
+    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)

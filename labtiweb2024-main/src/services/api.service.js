@@ -33,7 +33,7 @@ export const apiService = {
     if (USE_MOCK) {
       return mockFetch(laboratoriosMock);
     }
-    return fetch(`http://localhost:8000/back/obtener_laboratorios`);
+    return fetch(`${API_BASE_URL}${ENDPOINTS.LABORATORIOS}`);
   },
 
   async getLaboratorioById(id) {
@@ -41,7 +41,7 @@ export const apiService = {
       const laboratorio = getLaboratorioByIdMock(id);
       return mockFetch(laboratorio);
     }
-    return fetch(`http://localhost:8000/back/obtener_laboratorio1/${id}`);
+    return fetch(`${API_BASE_URL}${ENDPOINTS.LABORATORIO_BY_ID(id)}`);
   },
 
   // Courses
@@ -109,6 +109,155 @@ export const apiService = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password })
+    });
+  },
+
+  // Admin CRUD Operations
+  // Laboratorios
+  async createLaboratorio(data) {
+    if (USE_MOCK) {
+      const newLab = { id: Date.now(), ...data };
+      return mockFetch({ message: 'Laboratorio creado', id: newLab.id });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.LABORATORIOS_CREATE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async updateLaboratorio(id, data) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Laboratorio actualizado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.LABORATORIOS_UPDATE(id)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async deleteLaboratorio(id) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Laboratorio eliminado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.LABORATORIOS_DELETE(id)}`, {
+      method: 'DELETE'
+    });
+  },
+
+  // Cursos
+  async createCurso(data) {
+    if (USE_MOCK) {
+      const newCurso = { id: Date.now(), ...data };
+      return mockFetch({ message: 'Curso creado', id: newCurso.id });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.CURSOS_CREATE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async updateCurso(id, data) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Curso actualizado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.CURSOS_UPDATE(id)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async deleteCurso(id) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Curso eliminado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.CURSOS_DELETE(id)}`, {
+      method: 'DELETE'
+    });
+  },
+
+  // Componentes
+  async createComponente(data) {
+    if (USE_MOCK) {
+      const newComponente = { id: Date.now(), ...data };
+      return mockFetch({ message: 'Componente creado', id: newComponente.id });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.COMPONENTES_CREATE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async updateComponente(id, data) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Componente actualizado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.COMPONENTES_UPDATE(id)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async deleteComponente(id) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Componente eliminado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.COMPONENTES_DELETE(id)}`, {
+      method: 'DELETE'
+    });
+  },
+
+  // Materiales
+  async createMaterial(data) {
+    if (USE_MOCK) {
+      const newMaterial = { id: Date.now(), ...data };
+      return mockFetch({ message: 'Material creado', id: newMaterial.id });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.MATERIALES_CREATE}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async updateMaterial(id, data) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Material actualizado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.MATERIALES_UPDATE(id)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+  },
+
+  async deleteMaterial(id) {
+    if (USE_MOCK) {
+      return mockFetch({ message: 'Material eliminado' });
+    }
+    return fetch(`${API_BASE_URL}${ENDPOINTS.ADMIN.MATERIALES_DELETE(id)}`, {
+      method: 'DELETE'
     });
   }
 };
