@@ -1,0 +1,59 @@
+.lab-card {
+  @apply card cursor-pointer h-full flex flex-col;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lab-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.lab-card-image {
+  @apply relative h-48 overflow-hidden rounded-t-lg;
+}
+
+.lab-card-image img {
+  @apply w-full h-full object-cover;
+  transition: transform 0.3s ease;
+}
+
+.lab-card:hover .lab-card-image img {
+  transform: scale(1.05);
+}
+
+.image-placeholder {
+  @apply w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center;
+}
+
+.placeholder-icon {
+  @apply w-16 h-16 text-gray-400;
+}
+
+.lab-card-content {
+  @apply flex-1 flex flex-col p-5;
+}
+
+.lab-card-title {
+  @apply text-xl font-semibold text-gray-900 mb-3;
+  line-height: 1.3;
+}
+
+.lab-card-description {
+  @apply text-gray-600 text-sm leading-relaxed mb-4 flex-1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lab-card-footer {
+  @apply mt-auto;
+}
+
+.lab-card .btn {
+  @apply justify-center;
+}
+
+.lab-card:hover .btn {
+  @apply shadow-lg;
+}

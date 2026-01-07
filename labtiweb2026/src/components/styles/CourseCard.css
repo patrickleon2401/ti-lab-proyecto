@@ -1,0 +1,38 @@
+.course-card {
+  @apply card cursor-pointer h-full flex flex-col;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.course-card-icon {
+  @apply w-full h-32 bg-gradient-to-br from-orange-400 to-orange-600 rounded-t-lg flex items-center justify-center text-white mb-4;
+}
+
+.course-card:hover .course-card-icon {
+  background: linear-gradient(to bottom right, #E68500, var(--primary-color));
+}
+
+.course-card-content {
+  @apply flex-1 flex flex-col p-5;
+}
+
+.course-card-title {
+  @apply text-xl font-semibold text-gray-900 mb-3;
+  line-height: 1.3;
+}
+
+.course-card-description {
+  @apply text-gray-600 text-sm leading-relaxed mb-4 flex-1;
+}
+
+.course-card-btn {
+  @apply w-full;
+}
+
+.course-card:hover .course-card-btn {
+  @apply shadow-lg;
+}
