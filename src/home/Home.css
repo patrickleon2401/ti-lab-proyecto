@@ -1,0 +1,106 @@
+/* Contenedor principal para el Home */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  
+  height: 100vh; /* Centra el texto */
+  /* Reserva espacio para el Sidebar */
+}
+
+/* Estilos para la TopBar */
+
+/* Estilos para el Sidebar */
+
+
+/* Estilos para el contenido principal */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  padding: 20px;
+  margin-top: 64px; /* Asegura que el contenido quede debajo del TopBar */
+  /* Reserva espacio para el Sidebar */
+ 
+  text-align: center;
+   /* Asegura altura completa restando la TopBar */
+}
+
+/* Ajustes para la CardList y las tarjetas de curso */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px; /* Espacio entre las tarjetas */
+  justify-content: center;
+  margin-top: 40px;
+  width: 100%;
+  max-width: calc(100vw - 240px); /* Account for sidebar */
+}
+
+/* Resto de los estilos y media queries... */
+/* Ajustes responsivos para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* Sidebar ocupa el 100% del ancho en pantallas pequeñas */
+    position: static; /* Lo hace aparecer por debajo del contenido */
+    height: auto;
+  }
+
+  .main-content,
+  .content {
+    margin-left: 0; /* Quita el margen del sidebar en pantallas pequeñas */
+  }
+
+  .topbar {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+  
+  .card-list {
+    grid-template-columns: 1fr; /* 1 columna en móvil */
+    gap: 20px;
+    max-width: 100%;
+  }
+}
+
+/* Para pantallas medianas (tabletas) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablet */
+    gap: 25px;
+  }
+}
+
+/* Para pantallas grandes (desktop) */
+@media (min-width: 1025px) {
+  .card-list {
+    grid-template-columns: repeat(2, 1fr); /* 3 columnas en desktop */
+    gap: 30px;
+  }
+}
+.content p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6; /* Mejora la legibilidad con mayor interlineado */
+  max-width: 800px; /* Limita el ancho del párrafo para mejorar la legibilidad */
+  margin: 0 auto 30px auto; /* Centra el párrafo y agrega un margen inferior */
+  padding: 0 20px; /* Añade un pequeño padding lateral para espaciar el texto */
+}
+
+/* General responsive adjustments for content area */
+@media (max-width: 768px) {
+  .content {
+    padding: 15px;
+    margin-top: 64px;
+  }
+  
+  .content h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .content p {
+    font-size: 14px;
+    padding: 0 15px;
+    margin-bottom: 20px;
+  }
+}

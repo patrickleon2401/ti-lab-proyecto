@@ -1,0 +1,51 @@
+import React, { useState, useEffect } from "react";
+import LayoutWithSidebar from "../components/LayoutWithSidebar";
+import Loading from "../components/Loading";
+import CursoCard from "./CursoCard"; // Asegúrate de importar el nuevo componente CursoCard
+import { apiService } from '../services/api.service';
+const Cursos = () => {
+  const [cursos, setCursos] = useState([]); // Estado para almacenar los cursos
+  const [loading, setLoading] = useState(true); // Estado para el cargando (loading)
+
+  // Usamos useEffect para realizar la solicitud HTTP al backend cuando el componente se monta
+  useEffect(() => {
+    apiService.getCursos() // Usa el servicio API
+      .then((response) => response.json())
+      .then((data) => {
+        setCursos(data); // Establecemos los cursos obtenidos en el estado
+        setLoading(false); // Desactivamos el loading cuando los datos sean cargados
+      })
+      .catch((error) => {
+        console.error("Error al obtener los cursos:", error);
+        setLoading(false); // Si ocurre un error, dejamos de mostrar el estado de carga
+      });
+  }, []); // El efecto se ejecuta una sola vez cuando el componente se monta
+
+  // Mientras se cargan los cursos, mostramos un mensaje de "cargando"
+  if (loading) {
+    return <Loading message="Cargando cursos..." />;
+  }
+
+  return (
+    <LayoutWithSidebar className="content" style={{ marginTop: '64px', padding: '20px', flexGrow: 1, overflowY: 'auto' }}>
+      <h2>Cursos</h2>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', // Responsive grid
+          gap: '20px', // Espacio entre las tarjetas
+          marginTop: '10px',
+          width: '100%',
+          maxWidth: 'calc(100vw - 240px)', // Account for sidebar width
+          boxSizing: 'border-box',
+        }}
+      >
+        {cursos.map((curso) => (
+          <CursoCard key={curso.id} id={curso.id} curso={curso} />
+        ))}
+      </div>
+    </LayoutWithSidebar>
+  );
+};
+
+export default Cursos;

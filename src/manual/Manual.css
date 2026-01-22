@@ -1,0 +1,65 @@
+.manual-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    max-width: calc(100vw - 240px); /* Account for sidebar */
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .manual-container {
+      max-width: 100%;
+    }
+    
+    .content {
+      padding: 15px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .manual-container {
+      max-width: calc(100vw - 200px);
+    }
+  }
+  
+  .manual-list {
+    margin-top: 20px;
+  }
+  
+  .manual-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+  }
+  
+  .download-button {
+    padding: 5px 10px;
+    background-color: #FF9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .download-button:hover {
+    background-color: #E68A00;
+  }
+  

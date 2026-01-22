@@ -1,0 +1,40 @@
+/* DetalleLaboratorio.css */
+.detalle-container {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .detalle-laboratorio {
+    flex: 1;
+    
+    margin: 210px;
+  }
+  
+  .detalle-laboratorio h2 {
+    margin-bottom: 10px;
+  }
+  
+  .detalle-laboratorio p {
+    margin-bottom: 20px;
+  }
+  
+  .imagenes {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .imagenes img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+  }
+  
+  .sidebar {
+    margin-right: 20px;
+  }
+  
+  .topbar {
+    margin-bottom: 20px;
+  }
+  
